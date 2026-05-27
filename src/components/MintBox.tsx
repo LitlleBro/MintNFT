@@ -11,7 +11,41 @@ function MintBox({ onImageClick }: MintBoxProps) {
   const [message, setMessage] = useState("");
   const [minted, setMinted] = useState(false);
   const [showFirework, setShowFirework] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
   const nftImageSrc = "/images/base-girl-nft.png";
+  const confettiPieces = useMemo(
+    () => {
+      const sides = ["left", "right", "bottom"] as const;
+      return Array.from({ length: 84 }, (_, index) => {
+        const source = sides[index % sides.length];
+        const fromBottom = source === "bottom";
+        const fromLeft = source === "left";
+
+        return {
+          id: index,
+          source,
+          delay: `${Math.random() * 0.28}s`,
+          duration: `${1.7 + Math.random() * 1.1}s`,
+          x: fromBottom
+            ? `${-220 + Math.random() * 440}px`
+            : fromLeft
+              ? `${120 + Math.random() * 520}px`
+              : `${-120 - Math.random() * 520}px`,
+          y: fromBottom
+            ? `${-180 - Math.random() * 460}px`
+            : `${-70 - Math.random() * 320}px`,
+          rotate: `${180 + Math.random() * 420}deg`,
+          start:
+            source === "left"
+              ? `${14 + Math.random() * 70}%`
+              : source === "right"
+                ? `${14 + Math.random() * 70}%`
+                : `${10 + Math.random() * 80}%`
+        };
+      });
+    },
+    []
+  );
 
   const totalPreview = useMemo(() => quantity, [quantity]);
 
@@ -29,7 +63,9 @@ function MintBox({ onImageClick }: MintBoxProps) {
     if (minted) return;
     setMinted(true);
     setShowFirework(true);
+    setShowConfetti(true);
     setTimeout(() => setShowFirework(false), 1400);
+    setTimeout(() => setShowConfetti(false), 3400);
     setMessage(
       "Mint preview completed. Blockchain connection is not enabled in this demo."
     );
@@ -37,6 +73,26 @@ function MintBox({ onImageClick }: MintBoxProps) {
 
   return (
     <section className="section container" id="mint">
+      {showConfetti && (
+        <div className="confetti-layer" aria-hidden="true">
+          {confettiPieces.map((piece) => (
+            <span
+              key={piece.id}
+              className={`confetti-piece ${piece.source}`}
+              style={
+                {
+                  "--start": piece.start,
+                  animationDelay: piece.delay,
+                  animationDuration: piece.duration,
+                  "--x": piece.x,
+                  "--y": piece.y,
+                  "--rotate": piece.rotate
+                } as React.CSSProperties
+              }
+            />
+          ))}
+        </div>
+      )}
       <div className="mint-grid">
         <article className="glass-card nft-preview-card">
           <img

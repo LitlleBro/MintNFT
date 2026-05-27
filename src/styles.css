@@ -276,6 +276,78 @@ a.secondary-btn:hover {
   box-shadow: 0 28px 48px rgba(0, 0, 0, 0.5);
 }
 
+.confetti-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 950;
+  overflow: hidden;
+}
+
+.confetti-piece {
+  --x: 0px;
+  --y: -220px;
+  --start: 50%;
+  --rotate: 180deg;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 10px;
+  height: 16px;
+  border-radius: 2px;
+  background: linear-gradient(135deg, #59a1ff, #b4d2ff);
+  opacity: 0;
+  animation: confettiPop linear forwards;
+}
+
+.confetti-piece.left {
+  left: 14px;
+  bottom: var(--start);
+}
+
+.confetti-piece.right {
+  right: 14px;
+  left: auto;
+  bottom: var(--start);
+}
+
+.confetti-piece.bottom {
+  left: var(--start);
+  bottom: 12px;
+}
+
+.confetti-piece:nth-child(4n) {
+  background: linear-gradient(135deg, #1d7cff, #48c2ff);
+}
+
+.confetti-piece:nth-child(4n + 1) {
+  background: linear-gradient(135deg, #79d6ff, #8daeff);
+}
+
+.confetti-piece:nth-child(4n + 2) {
+  background: linear-gradient(135deg, #8f9eff, #9de8ff);
+}
+
+.confetti-piece:nth-child(3n) {
+  width: 7px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+@keyframes confettiPop {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) scale(0.7) rotate(0deg);
+  }
+  12% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--x), var(--y), 0) scale(1.05) rotate(var(--rotate));
+  }
+}
+
 .stats-grid {
   margin: 1rem 0 1.3rem;
   display: grid;
