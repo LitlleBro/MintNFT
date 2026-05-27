@@ -1,4 +1,11 @@
-function Hero() {
+type HeroProps = {
+  onImageClick: (src: string, alt: string) => void;
+};
+
+function Hero({ onImageClick }: HeroProps) {
+  const imageSrc = "/images/base-girl-hero.png";
+  const imageAlt = "Base Girl hero";
+
   return (
     <section className="section hero container" id="hero">
       <div className="hero-content glass-card">
@@ -11,15 +18,20 @@ function Hero() {
           Coinbase ecosystem, she discovered Base - and everything changed.
         </p>
         <div className="button-row">
-          <button className="primary-btn">Mint Base Girl NFT</button>
-          <button className="secondary-btn">Read Her Story</button>
+          <a className="primary-btn" href="#mint">
+            Mint Base Girl NFT
+          </a>
+          <a className="secondary-btn" href="#story">
+            Read Her Story
+          </a>
         </div>
       </div>
       <div className="hero-image-wrap glass-card">
         <img
-          src="/images/base-girl-hero.png"
-          alt="Base Girl hero placeholder"
-          className="hero-image"
+          src={imageSrc}
+          alt={imageAlt}
+          className="hero-image zoomable-image"
+          onClick={() => onImageClick(imageSrc, imageAlt)}
         />
       </div>
     </section>

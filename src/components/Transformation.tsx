@@ -1,13 +1,21 @@
-function Transformation() {
+type TransformationProps = {
+  onImageClick: (src: string, alt: string) => void;
+};
+
+function Transformation({ onImageClick }: TransformationProps) {
+  const bellaImageSrc = "/images/bella-accountant.png";
+  const baseGirlImageSrc = "/images/base-girl-after.png";
+
   return (
     <section className="section container">
       <h2>From Ledger to Legend</h2>
       <div className="transformation-grid">
         <article className="glass-card transform-card">
           <img
-            src="/images/bella-accountant.png"
-            alt="Bella accountant placeholder"
-            className="transform-image"
+            src={bellaImageSrc}
+            alt="Bella the Accountant"
+            className="transform-image zoomable-image"
+            onClick={() => onImageClick(bellaImageSrc, "Bella the Accountant")}
           />
           <h3>Bella the Accountant</h3>
           <p>
@@ -18,9 +26,10 @@ function Transformation() {
         </article>
         <article className="glass-card transform-card">
           <img
-            src="/images/base-girl-hero.png"
-            alt="Base Girl transformation placeholder"
-            className="transform-image"
+            src={baseGirlImageSrc}
+            alt="Base Girl"
+            className="transform-image zoomable-image"
+            onClick={() => onImageClick(baseGirlImageSrc, "Base Girl")}
           />
           <h3>Base Girl</h3>
           <p>
