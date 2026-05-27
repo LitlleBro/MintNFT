@@ -1,0 +1,3 @@
+# MintNFT
+
+Initial project setup.
